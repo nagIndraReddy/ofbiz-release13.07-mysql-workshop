@@ -305,6 +305,7 @@ public class WorkEffortServices {
         Security security = ctx.getSecurity();
         Map<String, Object> resultMap = FastMap.newInstance();
 
+
         String workEffortId = (String) context.get("workEffortId");
         GenericValue workEffort = null;
 
@@ -363,6 +364,23 @@ public class WorkEffortServices {
         if (workEffortPartyAssignments != null) resultMap.put("partyAssigns", workEffortPartyAssignments);
         if (tryEntity != null) resultMap.put("tryEntity", tryEntity);
         if (currentStatus != null) resultMap.put("currentStatusItem", currentStatus);
+        return resultMap;
+    }
+
+    public static Map<String, Object> getWorkEffortsKS(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Delegator delegator = ctx.getDelegator();
+        Map<String, Object> resultMap = FastMap.newInstance();
+        List<GenericValue> workEffortList = FastList.newInstance();
+
+        try {
+//            workEffort = delegator.findOne("WorkEffort", false, "workEffortId", workEffortId);
+            List<String> sortList = UtilMisc.toList("lastModifiedDate");
+            workEffortList = delegator.findList("WorkEffort", null, null, sortList, null, true);
+        } catch (GenericEntityException e) {
+            Debug.logWarning(e, module);
+        }
+
+        if (workEffortList != null) resultMap.put("workEffortList", workEffortList);
         return resultMap;
     }
 
