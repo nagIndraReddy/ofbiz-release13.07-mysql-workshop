@@ -40,3 +40,4 @@ themes/flatgrey/webapp/flatgrey/mainrtl-min.css
 *.jar
 .classpath
 .project
+.metadata/
